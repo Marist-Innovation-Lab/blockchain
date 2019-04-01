@@ -3,7 +3,7 @@ The Marist Joint Study implementation of blockchain and its network viewing tool
 
 ### Authors
 
-**Tom Magnusson** - *Essence*- [tommagnusson](https://github.com/tommagnusson)
+**Tom Magnusson** - *Essence* - [tommagnusson](https://github.com/tommagnusson)
 
 **Daniel Gisolfi** - *Network Viewer* - [dgisolfi](https://github.com/dgisolfi)
 
