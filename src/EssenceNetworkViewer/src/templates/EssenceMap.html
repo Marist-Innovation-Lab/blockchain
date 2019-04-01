@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Essence Network Map</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+        <link rel="stylesheet" href="{{theme}}" >
+    </head>
+        <style type="text/css" media="screen">
+          #editor {
+              margin: 0;
+              position: absolute;
+              top: 0;
+              bottom: 0;
+              left: 0;
+              right: 0;
+          }
+        </style>
+    </head>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="/EssenceMap">Essence Network Map</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation" style="">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/EssenceMap">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Settings">Settings</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <body>
+        <br>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="container jumbotron">
+                        <h1>Essence API</h1>
+                        
+                        <div class="tab-pane" id="APIHelp" role="tabpanel" aria-labelledby="pills-profile-tab">
+                            <h2>API Help</h2>
+                            <div class="container" style="line-height: 1">
+                                <p>API commands: GET [action], PUT [action], POST [action], DELETE [action]</p>
+                                <p>+-- GET  /ver[sion] - API version</p>
+                                <p>+-- GET  /date - current date</p>
+                                <p>+-- GET  /time - current time</p>
+                                <p>+-- GET  /datetime - current date and time</p>
+                                <p>+-- GET  /details - the server's current mining difficulty and maximum tx per block (for all blockchains)</p>
+                                <p>+-- GET  /friends - the server's known friends in the network</p>
+                                <p>+-- GET  /blockchains - the blockchain ids that the server has stored</p>
+                                <p>+- GET  /blockchain/{id} - the entire blockchain with {id}</p>
+                                <p>+- GET  /blockchain/{id}/buffer - blockchain with {id}'s transaction buffer</p>
+                                <p>+- GET  /blockchain/{bcId}/transaction/{txId} - the transaction with {txId} that belongs to blockchain with {bcId}</p>
+                                <p>+- GET  /blockchain/{bcId}/block/{bId}/transaction/{txId} - the transaction with {txId} that belongs</p>
+                                <p>to block with {bId} that belongs to blockchain with {bcId}</p>
+                                <br>
+                                <p>+-- POST /blockchain - create a new blockchain, returns the newly created blockchain</p>
+                                <p>+- POST /blockchain/{id}/transaction - create a new transaction, slated to be added to blockchain with {id},</p>
+                                <p>and put it on the server's transaction buffer</p>
+                                <p>+- POST /blockchain/{id} - request the server empty its transactions from its tx buffer into a block, mine</p>
+                                <p>that block and add it to the blockchain</p>
+                                <br>
+                                <p>+-- PUT</p>
+                                <br>
+                                <p>+- DELETE /blockchain/{id}/buffer - request the server clear its transaction buffer)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="container jumbotron col-md-11">
+                        <div class="row">
+                            <h1>Console</h1>
+                            <br>
+                            <div class="jumbotron col-md-11">
+                                <p id="editor"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                        <div class="container jumbotron col-md-11">
+                            <h1>Network Map</h1>
+                            <br>
+                            <div class="text-center">
+                                <canvas class="col" id="network" width="500" height="500" style=" width: auto; height: auto;border: 1px solid black;"></canvas>
+                                <script src="https://d3js.org/d3.v4.min.js"></script>
+                                <script src="{{ url_for('.static', filename='essenceVisual.js') }}"></script>
+                            </div>
+                            <div class="row">
+                                <div class="container-fluid col text-center">
+                                    <div class="card">
+                                        <div class="card-header text-white bg-primary">Node Details</div>
+                                            <div class="card-body">
+                                                <h5 class="card-title">Port:</h5>
+                                                <h5 class="card-text" id="port" type="text"></h5>
+                                                <!-- <h3 class="card-title">Selected Port</h5>
+                                                <h4 class="card-text" id="selectedPeer" type="text"></h4> -->
+                                            </div>
+                                        <div class="col-md-12"  style="padding-bottom: 20px;"><button id="Refresh" class="btn btn-primary" onclick="location.reload();">Reset Nodes</button></div>
+                                    </div>
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js"></script>
+        <script src="./static/ace/src-noconflict/ace.js" type="text/javascript"></script>
+        <script src="./static/editor.js" type="text/javascript"></script>
+        <script type="text/javascript">
+        setup();
+        editor.setTheme("ace/theme/{{editorTheme}}");
+        Console_log("Editor Theme: {{editorTheme}}\n");
+        Console_log('Connecting to Peer on Port: {{peer}}\n\n');
+
+        Console_log("ESSENCE: {{apiCall}}\n")
+        Console_log("MAP Status: {{mapStatus}}")
+        </script>
+    </body>
+</html>

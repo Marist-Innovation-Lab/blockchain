@@ -48,3 +48,5 @@ fabric.properties
 
 *.out
 blockchain*
+
+*.pyc

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Essence Network Map login</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.1/flatly/bootstrap.min.css" >
+    </head>
+    <body>
+        <br><br>
+        <div class="container text-muted w-50">
+            <div class="container">
+                <div class="card mb-3">
+                    <h3 class="card-header text-center">Please Login to access files</h3>
+                    <div class="card-body">
+                        <div id="entryform" class="content-wrap">
+                            <form name="adminLogin" method="POST">
+
+                                <label for="author">Username</label>
+                                <div class="form-group row">
+                                    <div class="col-sm-10">
+                                        <input class="form-control" placeholder="Username" name="username" value="{{request.form.username }}" required>
+                                    </div>
+                                </div>
+
+                                <label for="quote">Password</label>
+                                <div class="form-group row">
+                                    <div class="col-sm-10">
+                                        <input class="form-control" type="password" placeholder="Password" name="password" value="{{request.form.password}}" required>
+                                    </div>
+                                </div>
+
+                                <div class="container w-50">
+                                    <button type="submit" class="btn btn-primary btn-s btn-block">Login</button>
+                                </div>
+                            </form>
+                            {% if error %}
+                              <p class="error"><strong>Error:</strong> {{ error }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
